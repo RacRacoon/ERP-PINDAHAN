@@ -1,0 +1,68 @@
+[
+  {
+    "nama": "Agustus 2026",
+    "mulai": "2026-08-01",
+    "selesai": "2026-08-31",
+    "aktif": false,
+    "catatan": "Masih pakai ongkir. Baris Work di sheet lama tidak balance tanpa ongkir — angka di bawah pakai varian Ongkir yang balance.",
+    "rates": [
+      { "tipe": "GAMING", "hargaServis": 250000, "modalPasta": 35167, "ongkir": 0,     "shareMarketing": 19000, "sharePekerja": 100000, "shareManajemen": 75000, "_shareLabHarusnya": 20833 },
+      { "tipe": "WORK",   "hargaServis": 150000, "modalPasta": 15100, "ongkir": 10000, "shareMarketing": 10000, "sharePekerja": 63000,  "shareManajemen": 40000, "_shareLabHarusnya": 11900 }
+    ]
+  },
+  {
+    "nama": "Promo 17-21 Agustus",
+    "mulai": "2026-08-17",
+    "selesai": "2026-08-21",
+    "aktif": false,
+    "catatan": "Diskon 17%. Pakai ongkir.",
+    "rates": [
+      { "tipe": "GAMING", "hargaServis": 207500, "modalPasta": 35167, "ongkir": 12000, "shareMarketing": 15000, "sharePekerja": 75000, "shareManajemen": 50000, "_shareLabHarusnya": 20333 },
+      { "tipe": "WORK",   "hargaServis": 124500, "modalPasta": 15100, "ongkir": 8000,  "shareMarketing": 10000, "sharePekerja": 50000, "shareManajemen": 30000, "_shareLabHarusnya": 11400 }
+    ]
+  },
+  {
+    "nama": "September 2026",
+    "mulai": "2026-09-01",
+    "selesai": "2026-09-30",
+    "aktif": false,
+    "catatan": "Ongkir sudah tidak dipakai.",
+    "rates": [
+      { "tipe": "GAMING", "hargaServis": 250000, "modalPasta": 35167, "ongkir": 0, "shareMarketing": 20000, "sharePekerja": 85000, "shareManajemen": 75000, "_shareLabHarusnya": 34833 },
+      { "tipe": "WORK",   "hargaServis": 150000, "modalPasta": 15100, "ongkir": 0, "shareMarketing": 10000, "sharePekerja": 60000, "shareManajemen": 50000, "_shareLabHarusnya": 14900 }
+    ]
+  },
+  {
+    "nama": "Promo 9-11 September",
+    "mulai": "2026-09-09",
+    "selesai": "2026-09-11",
+    "aktif": false,
+    "catatan": "Diskon 9,90%.",
+    "rates": [
+      { "tipe": "GAMING", "hargaServis": 225250, "modalPasta": 35167, "ongkir": 0, "shareMarketing": 16187, "sharePekerja": 85000, "shareManajemen": 60000, "_shareLabHarusnya": 28896 },
+      { "tipe": "WORK",   "hargaServis": 135150, "modalPasta": 15100, "ongkir": 0, "shareMarketing": 8017,  "sharePekerja": 60000, "shareManajemen": 40000, "_shareLabHarusnya": 12033 }
+    ]
+  },
+  {
+    "nama": "Oktober 2026",
+    "mulai": "2026-10-01",
+    "selesai": null,
+    "aktif": true,
+    "catatan": "PERIKSA: harga turun dari September tapi share marketing/pekerja/manajemen belum disesuaikan. Pasta Gaming dibulatkan ke 35.200 mulai Oktober. Kas Lab turun ke 19.800 (Gaming) dan 9.900 (Work).",
+    "rates": [
+      { "tipe": "GAMING", "hargaServis": 235000, "modalPasta": 35200, "ongkir": 0, "shareMarketing": 20000, "sharePekerja": 85000, "shareManajemen": 75000, "_shareLabHarusnya": 19800 },
+      { "tipe": "WORK",   "hargaServis": 145000, "modalPasta": 15100, "ongkir": 0, "shareMarketing": 10000, "sharePekerja": 60000, "shareManajemen": 50000, "_shareLabHarusnya": 9900 }
+    ]
+  },
+  {
+    "nama": "Anak B4",
+    "mulai": "2026-08-01",
+    "selesai": null,
+    "aktif": false,
+    "catatan": "Tarif internal, diskon 80%. Semua keuntungan masuk Kas Lab. Angka WORK belum pernah dipakai — konfirmasi ke Rakan.",
+    "rates": [
+      { "tipe": "GAMING", "hargaServis": 50000, "modalPasta": 35167, "ongkir": 0, "shareMarketing": 0, "sharePekerja": 0, "shareManajemen": 0, "_shareLabHarusnya": 14833 },
+      { "tipe": "WORK",   "hargaServis": 30000, "modalPasta": 15100, "ongkir": 0, "shareMarketing": 0, "sharePekerja": 0, "shareManajemen": 0, "_shareLabHarusnya": 14900 }
+    ]
+  }
+]

@@ -1,0 +1,121 @@
+[
+  {
+    "nama": "Oktober 2026",
+    "mulai": "2026-10-01",
+    "selesai": null,
+    "aktif": true,
+    "catatan": "Tarif efektif ERP. Pasta Gaming dibulatkan ke 35.200. Gaming: manajemen 65.000, Kas Lab 29.800. Cleaning only: harga mulai 100.000, tanpa pasta, Kas Lab 20.000.",
+    "rates": [
+      {
+        "tipe": "GAMING",
+        "hargaServis": 235000,
+        "modalPasta": 35200,
+        "ongkir": 0,
+        "shareMarketing": 20000,
+        "sharePekerja": 85000,
+        "shareManajemen": 65000,
+        "_shareLabHarusnya": 29800
+      },
+      {
+        "tipe": "WORK",
+        "hargaServis": 145000,
+        "modalPasta": 15100,
+        "ongkir": 0,
+        "shareMarketing": 10000,
+        "sharePekerja": 60000,
+        "shareManajemen": 50000,
+        "_shareLabHarusnya": 9900
+      },
+      {
+        "tipe": "CLEANING",
+        "hargaServis": 100000,
+        "modalPasta": 0,
+        "ongkir": 0,
+        "shareMarketing": 10000,
+        "sharePekerja": 50000,
+        "shareManajemen": 20000,
+        "_shareLabHarusnya": 20000
+      },
+      {
+        "tipe": "REPASTE_MACBOOK",
+        "hargaServis": 285000,
+        "modalPasta": 34200,
+        "ongkir": 0,
+        "shareMarketing": 20000,
+        "sharePekerja": 85000,
+        "shareManajemen": 100000,
+        "_shareLabHarusnya": 45800
+      }
+    ]
+  },
+  {
+    "nama": "Anak B4",
+    "mulai": "2026-08-01",
+    "selesai": "2026-11-29",
+    "aktif": false,
+    "catatan": "Berakhir 29 November 2026, tidak berlaku sejak 30 November. Tarif internal, diskon 80%. Semua keuntungan masuk Kas Lab. Angka WORK belum pernah dipakai, konfirmasi ke Rakan.",
+    "rates": [
+      {
+        "tipe": "GAMING",
+        "hargaServis": 50000,
+        "modalPasta": 35200,
+        "ongkir": 0,
+        "shareMarketing": 0,
+        "sharePekerja": 0,
+        "shareManajemen": 0,
+        "_shareLabHarusnya": 14800
+      },
+      {
+        "tipe": "WORK",
+        "hargaServis": 30000,
+        "modalPasta": 15100,
+        "ongkir": 0,
+        "shareMarketing": 0,
+        "sharePekerja": 0,
+        "shareManajemen": 0,
+        "_shareLabHarusnya": 14900
+      }
+    ]
+  },
+  {
+    "nama": "Ajak Teman Nov 2026",
+    "mulai": "2026-11-01",
+    "selesai": "2026-11-30",
+    "aktif": false,
+    "campaign": true,
+    "acuan": "Oktober 2026",
+    "catatan": "Campaign referral. Dipilih per job, tidak menggantikan tarif Oktober. Pengajak dan temannya sama-sama memakai tarif ini. Tanpa Cleaning. Marketing 0 (yang membawa customer adalah customer lain), selisih diskon ditanggung Manajemen. Kas Lab sama dengan tarif Oktober.",
+    "rates": [
+      {
+        "tipe": "GAMING",
+        "hargaServis": 210000,
+        "modalPasta": 35200,
+        "ongkir": 0,
+        "shareMarketing": 0,
+        "sharePekerja": 85000,
+        "shareManajemen": 60000,
+        "_shareLabHarusnya": 29800
+      },
+      {
+        "tipe": "WORK",
+        "hargaServis": 130000,
+        "modalPasta": 15100,
+        "ongkir": 0,
+        "shareMarketing": 0,
+        "sharePekerja": 60000,
+        "shareManajemen": 45000,
+        "_shareLabHarusnya": 9900
+      },
+      {
+        "tipe": "REPASTE_MACBOOK",
+        "hargaServis": 255000,
+        "modalPasta": 34200,
+        "ongkir": 0,
+        "shareMarketing": 0,
+        "sharePekerja": 85000,
+        "shareManajemen": 90000,
+        "_shareLabHarusnya": 45800
+      }
+    ]
+  }
+]

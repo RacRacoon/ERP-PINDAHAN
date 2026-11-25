@@ -1,0 +1,260 @@
+// B4 Service Center — ERP
+// Semua nilai uang disimpan sebagai Int dalam rupiah penuh (tanpa sen).
+// Alasan: tidak ada sen di transaksi B4, dan Int menghindari error floating point.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")       // Neon pooled connection
+  directUrl = env("DIRECT_URL")          // Neon direct, dipakai saat migrate
+}
+
+// ---------------------------------------------------------------- enum
+
+enum TipeLaptop {
+  GAMING
+  WORK
+  CLEANING // servis bersih-bersih tanpa ganti pasta, modalPasta 0, harga mulai 100.000
+  REPASTE_MACBOOK // repaste MacBook: pasta Gaming setengah tube-job (modalPasta = 35.200 / 2)
+}
+
+enum StatusJob {
+  BOOKING
+  DIKERJAKAN
+  SELESAI
+  BATAL
+}
+
+enum MetodeBayar {
+  QRIS
+  DANA
+  TUNAI
+  TRANSFER
+}
+
+enum PeranPerson {
+  TEKNISI
+  MARKETING
+  KEDUANYA
+}
+
+// Campaign "Ajak Teman": peran job di dalam satu pasangan referral.
+enum PeranReferral {
+  PENGAJAK
+  TEMAN
+}
+
+enum KategoriPayout {
+  PEKERJA
+  MARKETING
+  MANAJEMEN
+}
+
+// ---------------------------------------------------------------- auth
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  nama         String
+  createdAt    DateTime @default(now())
+}
+
+// ---------------------------------------------------------------- customer
+
+model Instansi {
+  id        String     @id @default(cuid())
+  nama      String     @unique // "Teknik Komputer ITS", "HIMATEKKOM", "Umum"
+  jenis     String? // departemen / himpunan / lab / perusahaan / umum
+  catatan   String?
+  customers Customer[]
+  createdAt DateTime   @default(now())
+}
+
+model Customer {
+  id         String       @id @default(cuid())
+  nama       String
+  noWa       String?      @unique // simpan format 62xxxxxxxxxx, normalisasi saat input
+  instagram  String?      @unique // username huruf kecil tanpa @. Customer harus punya noWa atau instagram (dicek di aplikasi)
+  instansiId String?
+  instansi   Instansi?    @relation(fields: [instansiId], references: [id])
+  catatan    String?
+  createdAt  DateTime     @default(now())
+  serviceJobs ServiceJob[]
+  repairJobs  RepairJob[]
+
+  @@index([nama])
+  @@index([instansiId])
+}
+
+// ---------------------------------------------------------------- orang
+
+model Person {
+  id                String       @id @default(cuid())
+  nama              String       @unique
+  peran             PeranPerson  @default(TEKNISI)
+  aktif             Boolean      @default(true)
+  createdAt         DateTime     @default(now())
+  jobsSebagaiPj     ServiceJob[] @relation("JobPj")
+  jobsSebagaiMarket ServiceJob[] @relation("JobMarketing")
+  payouts           Payout[]
+}
+
+// ---------------------------------------------------------------- tarif
+
+model RatePeriod {
+  id      String    @id @default(cuid())
+  nama    String    @unique // "September 2026", "Promo 9-11 September", "Anak B4"
+  mulai   DateTime  @db.Date
+  selesai DateTime? @db.Date // null = berlaku terus
+  aktif   Boolean   @default(false) // tepat satu periode normal yang aktif
+  catatan String?
+  rates   Rate[]
+
+  // Campaign (mis. "Ajak Teman Nov 2026"): dipilih per job dan tidak menggantikan tarif normal.
+  // Job hanya boleh memakainya kalau tanggal masuk ada di antara `mulai` dan `selesai`.
+  campaign Boolean       @default(false)
+  // Periode normal sebagai pembanding diskon di rekap (mis. "Oktober 2026").
+  acuanId  String?
+  acuan    RatePeriod?   @relation("AcuanCampaign", fields: [acuanId], references: [id])
+  campaigns RatePeriod[] @relation("AcuanCampaign")
+}
+
+model Rate {
+  id             String     @id @default(cuid())
+  ratePeriodId   String
+  ratePeriod     RatePeriod @relation(fields: [ratePeriodId], references: [id], onDelete: Cascade)
+  tipe           TipeLaptop
+  hargaServis    Int
+  modalPasta     Int
+  ongkir         Int        @default(0) // tidak dipakai lagi sejak Sep 2026, disimpan untuk data lama
+  shareMarketing Int
+  sharePekerja   Int
+  shareManajemen Int
+  // shareLab TIDAK disimpan. Dia sisa:
+  //   shareLab = hargaServis - modalPasta - ongkir - shareMarketing - sharePekerja - shareManajemen
+  serviceJobs    ServiceJob[]
+
+  @@unique([ratePeriodId, tipe])
+}
+
+// ---------------------------------------------------------------- servis pasta
+
+model ServiceJob {
+  id             String      @id @default(cuid())
+  invoice        String?     @unique // urutan-hari + DDMMYY tanggal masuk, mis. 01010126
+  tanggalMasuk   DateTime    @db.Date
+  tanggalSelesai DateTime?   @db.Date
+  modelLaptop    String
+  tipe           TipeLaptop
+  keluhan        String?
+
+  customerId  String?
+  customer    Customer? @relation(fields: [customerId], references: [id])
+  pjId        String
+  pj          Person    @relation("JobPj", fields: [pjId], references: [id])
+  marketingId String?
+  marketing   Person?   @relation("JobMarketing", fields: [marketingId], references: [id])
+
+  status     StatusJob    @default(DIKERJAKAN)
+  lunas      Boolean      @default(false)
+  pembayaran MetodeBayar?
+
+  rateId String
+  rate   Rate   @relation(fields: [rateId], references: [id])
+
+  // snapshot saat job dibuat, boleh di-override per job
+  jumlah         Int // harga akhir yang dibayar customer
+  diskonPersen   Decimal? @db.Decimal(5, 2) // 80.00, 17.00, 9.90 — hanya untuk ditampilkan
+  modalPasta     Int
+  ongkir         Int      @default(0)
+  shareMarketing Int
+  sharePekerja   Int
+  shareManajemen Int
+
+  // Referral campaign: dua job satu pasangan memakai kode yang sama. Hanya terisi untuk job bertarif campaign.
+  referralKode  String?
+  referralPeran PeranReferral?
+
+  catatan   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tanggalMasuk])
+  @@index([tanggalSelesai])
+  @@index([status])
+  @@index([pjId])
+  @@index([marketingId])
+  @@index([referralKode])
+}
+
+// ---------------------------------------------------------------- reparasi hardware (vendor: Reparium)
+
+model RepairJob {
+  id             String      @id @default(cuid())
+  invoice        String?     @unique // urutan-hari + DDMMYY tanggal masuk, mis. 01010126
+  tanggalMasuk   DateTime    @db.Date
+  tanggalSelesai DateTime?   @db.Date
+  modelLaptop    String
+  tipe           TipeLaptop?
+  masalah        String
+  penyelesaian   String?
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id])
+
+  status     StatusJob    @default(DIKERJAKAN)
+  lunas      Boolean      @default(false)
+  pembayaran MetodeBayar?
+
+  jumlah        Int // yang dibayar customer
+  modalReparium Int // yang dibayar B4 ke Reparium
+  persenKasLab  Int @default(40) // 30 untuk data Agustus 2026, 40 sejak September
+  // keuntungan = jumlah - modalReparium
+  // kasLab     = round(keuntungan * persenKasLab / 100)
+  // manage     = keuntungan - kasLab
+
+  transfer  Boolean  @default(false) // bagian Manage sudah ditransfer?
+  catatan   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tanggalMasuk])
+  @@index([status])
+}
+
+// ---------------------------------------------------------------- stok pasta
+
+model PastaLot {
+  id         String     @id @default(cuid())
+  tanggal    DateTime   @db.Date
+  tipe       TipeLaptop
+  hargaTube  Int // 105500 untuk gaming, 75500 untuk work
+  jobPerTube Int // 3 untuk gaming, 5 untuk work
+  biayaTambahan Int @default(0) // ongkir dan biaya lain saat beli tube. Hanya untuk acuan modal di halaman Tarif, tidak masuk hitungan job.
+  sisaJob    Int // dikurangi tiap ServiceJob dengan tipe yang sama
+  catatan    String?
+  createdAt  DateTime   @default(now())
+
+  @@index([tipe])
+}
+
+// ---------------------------------------------------------------- pembayaran ke orang
+
+model Payout {
+  id        String         @id @default(cuid())
+  periode   String // "2026-09"
+  personId  String
+  person    Person         @relation(fields: [personId], references: [id])
+  kategori  KategoriPayout
+  jumlah    Int
+  dibayarAt DateTime?
+  catatan   String?
+  createdAt DateTime       @default(now())
+
+  @@unique([periode, personId, kategori])
+  @@index([periode])
+}

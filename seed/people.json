@@ -1,0 +1,13 @@
+[
+  { "nama": "Rakan",   "peran": "KEDUANYA",  "aktif": true },
+  { "nama": "Abraham", "peran": "TEKNISI",   "aktif": true },
+  { "nama": "Edward",  "peran": "KEDUANYA",  "aktif": true },
+  { "nama": "Sandi",   "peran": "TEKNISI",   "aktif": true },
+  { "nama": "Reyvan",  "peran": "TEKNISI",   "aktif": true },
+  { "nama": "Faiq",    "peran": "KEDUANYA",  "aktif": true },
+  { "nama": "Rildo",   "peran": "MARKETING", "aktif": true },
+  { "nama": "Fito",    "peran": "MARKETING", "aktif": true },
+  { "nama": "Ojan",    "peran": "MARKETING", "aktif": true },
+  { "nama": "Rizza",   "peran": "MARKETING", "aktif": true },
+  { "nama": "Via",     "peran": "MARKETING", "aktif": true }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "tanggal": "2026-09-28",
+    "tipe": "GAMING",
+    "hargaTube": 105500,
+    "jobPerTube": 3,
+    "sisaJob": 3,
+    "catatan": "Modal pasta per job = 105500 / 3 = 35166,67, dibulatkan ke atas per 100 jadi 35200 (mulai Oktober 2026)"
+  },
+  {
+    "tanggal": "2026-09-28",
+    "tipe": "WORK",
+    "hargaTube": 75500,
+    "jobPerTube": 5,
+    "sisaJob": 10,
+    "catatan": "2 tube. Modal pasta per job = 75500 / 5 = 15100"
+  }
+]
