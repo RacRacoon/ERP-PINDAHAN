@@ -7,7 +7,7 @@ import {
   jumlahkanServis,
 } from "./hitung";
 import { NAMA_TIPE, type Tipe } from "./tipe";
-import { geserBulan, hariIniJakarta, kunciBulan, namaBulan, namaBulanPendek, rentangBulan } from "./format";
+import { geserBulan, hariIniJakarta, kunciBulan, namaBulan, namaBulanPendek, rentangBulan, teksTube } from "./format";
 import { ARSIP_BULANAN } from "./arsip";
 import { hitungPerKode, menungguPasangan, ringkasCampaign, type JobCampaign } from "./campaign";
 
@@ -296,7 +296,7 @@ export async function stokPasta() {
     const ref = [...l].sort((a, b) => +b.tanggal - +a.tanggal)[0];
     const sisa = l.reduce((a, x) => a + x.sisaJob, 0);
     const perTube = ref?.jobPerTube ?? 0;
-    return { tipe, nama: NAMA_TIPE[tipe], sisa, perTube, tube: perTube ? Math.ceil(sisa / perTube) : 0, tipis: sisa <= (perTube || 3) };
+    return { tipe, nama: NAMA_TIPE[tipe], sisa, perTube, tubeTeks: teksTube(sisa, perTube), tipis: sisa <= (perTube || 3) };
   });
 }
 

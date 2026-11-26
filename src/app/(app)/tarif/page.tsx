@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { angka, hariIniJakarta, isoTanggal, tglPendek } from "@/lib/format";
+import { angka, hariIniJakarta, isoTanggal, teksTube, tglPendek } from "@/lib/format";
 import { periodeBerlaku } from "@/lib/campaign";
 import { hitungBagiHasil, modalPastaPerJob } from "@/lib/hitung";
 import { periodeNormal, peringatanTarif } from "@/lib/queries";
@@ -116,12 +116,11 @@ export default async function TarifPage() {
           <div className="space-y-3">
             {stok.map(({ tipe, ref, sisa }) => {
               const tipis = sisa <= (ref?.jobPerTube ?? 3);
-              const tube = ref ? Math.ceil(sisa / ref.jobPerTube) : 0;
               return (
                 <div key={tipe} className={`flex items-center justify-between rounded-xl px-4 py-3.5 ${tipis ? "border border-[#5a4417] bg-[#211c10]" : "bg-panel2"}`}>
                   <div>
                     <div className="font-medium">Pasta {tipe === "GAMING" ? "Gaming" : "Work"}</div>
-                    <div className="text-[0.8rem] text-muted">{tube} tube — cukup {sisa} job lagi</div>
+                    <div className="text-[0.8rem] text-muted">{teksTube(sisa, ref?.jobPerTube ?? 0)} — cukup {sisa} job lagi</div>
                   </div>
                   <div className={`num text-lg font-bold ${tipis ? "text-amber" : ""}`}>{sisa} job</div>
                 </div>

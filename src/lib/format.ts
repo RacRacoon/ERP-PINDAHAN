@@ -53,3 +53,10 @@ export const persen = (a: number, b: number) => (b === 0 ? 0 : Math.round((a / b
 export function inisial(nama: string): string {
   return nama.slice(0, 2).toUpperCase();
 }
+
+/** Teks stok pasta: hanya tube utuh, sisa job tidak ikut ditulis. Kurang dari satu tube ditulis begitu, bukan "0 tube". */
+export function teksTube(sisaJob: number, jobPerTube: number): string {
+  if (!jobPerTube || sisaJob <= 0) return "habis";
+  const utuh = Math.floor(sisaJob / jobPerTube);
+  return utuh >= 1 ? `${utuh} tube` : "kurang dari 1 tube";
+}

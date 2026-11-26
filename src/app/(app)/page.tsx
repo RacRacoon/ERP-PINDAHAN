@@ -90,7 +90,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
               <div>
                 <div className="font-medium">Pasta {p.nama}</div>
                 <div className="text-[0.8rem] text-muted">
-                  {p.tube} tube{p.tipis ? " · hampir habis" : ""}
+                  {p.tubeTeks}{p.tipis ? " · hampir habis" : ""}
                 </div>
               </div>
               <div className={`num text-xl font-bold ${p.tipis ? "text-amber" : ""}`}>

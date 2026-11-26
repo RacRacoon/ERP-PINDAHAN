@@ -1,13 +1,13 @@
 # Konteks untuk Claude Code di laptop baru
 
-Ditulis 25 November 2026 dari percakapan di laptop lama. Baca ini bersama `CLAUDE.md` (aturan repo) dan `RENCANA.md` (model bisnis). Memori otomatis Claude di laptop lama (`~/.claude/projects/.../memory`) tidak ikut pindah, jadi isinya diringkas di sini.
+Ditulis 25 November 2026, diperbarui 26 November dari percakapan di laptop lama. Baca ini bersama `CLAUDE.md` (aturan repo) dan `RENCANA.md` (model bisnis). Memori otomatis Claude di laptop lama (`~/.claude/projects/.../memory`) tidak ikut pindah, jadi isinya diringkas di sini.
 
 ## Cara bekerja dengan Rakan
 - Balas dalam bahasa Indonesia yang polos dan langsung, tanpa basa-basi. Terapkan gaya `/stop-slop`.
 - Uang dan data bisnis: jangan ubah tanpa konfirmasi. Salah baca soal Kas Lab pernah terjadi dan harus dikembalikan.
 - Jangan push, buat repo GitHub, atau deploy tanpa izin tegas. Jangan tambah `Co-Authored-By: Claude` di commit atau PR.
 - Kalau diminta diskusi ("jangan ubah apa pun"), jangan ubah apa pun.
-- Verifikasi sebelum bilang selesai: `npx tsc --noEmit`, `npx eslint src prisma`, `npx vitest run` (68 tes), `npx next build`, lalu cek di browser. `npx eslint` untuk seluruh proyek gagal di 3 `require()` pada `scripts/set-password.cjs` (sudah lama, bukan masalah baru).
+- Verifikasi sebelum bilang selesai: `npx tsc --noEmit`, `npx eslint src prisma`, `npx vitest run` (71 tes), `npx next build`, lalu cek di browser. `npx eslint` untuk seluruh proyek gagal di 3 `require()` pada `scripts/set-password.cjs` (sudah lama, bukan masalah baru).
 
 ## Keadaan sistem
 - Aplikasi: B4 Service Center (dulu B401, "B4" = B-four, 4fter). Next.js 16, Prisma 6, Auth.js v5, Tailwind 4, vitest. Database produksi = **Neon** (`.env`). Postgres lokal port 5433 sisa awal pengembangan, tidak dipakai.
@@ -22,6 +22,7 @@ Ditulis 25 November 2026 dari percakapan di laptop lama. Baca ini bersama `CLAUD
 - **Rencana tarif Desember 2026 dibatalkan** pada 22 Nov. Isinya: Kas Lab jadi "Sewa Tempat" tetap 15.000 / 10.000 / 10.000 / 15.000 mulai Senin 30 Nov, MacBook 275.000, Pekerja MacBook 90.000. Data dan seed-nya sudah dihapus. Cadangan ada di scratchpad laptop lama (`desember-dibatalkan.json`), bukan di folder ini. Jangan dihidupkan lagi tanpa konfirmasi.
 - Reparasi hardware (lewat Reparium) sejak November: Kas Lab 0% (`persenKasLab` default 0), semua keuntungan ke Manage. Data Oktober dan sebelumnya tetap 30% dan 40%. Servis pasta tidak ikut perjanjian ini.
 - Pasta Gaming: lot terbaru 20 Nov harga tube 67.700 plus `biayaTambahan` 2.300 (kolom baru), sisa 2 job. Acuan modal di halaman Tarif 23.400 per job. Modal di tarif tetap 35.200.
+- Pasta Work dikoreksi 25 Nov: stok nyata 1 tube (5 job), sebelumnya tercatat 9 job. Teks stok hanya menghitung tube utuh (`teksTube` di `src/lib/format.ts`): 9 job dengan 5 job per tube tertulis "1 tube", kurang dari satu tube tertulis "kurang dari 1 tube".
 
 ## Latar belakang yang belum jelas
 Rakan sempat membahas melepas bisnis dari Lab B401 (lab jadi mitra yang hanya menerima biaya ruang). Pesan WhatsApp ke koordinator lab menyebut kebijakan mulai 30 November dengan biaya tetap per servis. Setelah itu Rakan **membatalkan tarif Desember**. Belum jelas apakah kesepakatan dengan lab ikut batal atau hanya angkanya. Tanyakan dulu sebelum mengubah apa pun yang menyangkut Kas Lab atau lab.
